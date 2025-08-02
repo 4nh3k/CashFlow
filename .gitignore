@@ -1,0 +1,160 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+node_modules
+jspm_packages/
+
+# Snowpack dependency directory (https://snowpack.dev/)
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Vite build output
+dist
+dist-ssr
+*.local
+
+# Vite cache
+.vite/
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output (if using)
+.next
+out
+
+# Nuxt.js build / generate output (if using)
+.nuxt
+
+# Gatsby files (if using)
+.cache/
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Local Netlify folder
+.netlify
+
+# Local Vercel folder
+.vercel
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# MongoDB specific
+*.mongodb
+
+# Realm Web SDK cache
+.realm/
+
+# Personal Finance App specific files
+# Backup files
+*.backup
+*.bak
+
+# Local database files (if using local storage)
+*.sqlite
+*.db
+
+# Temporary files
+temp/
+tmp/
+
+# Test files and coverage
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Storybook build outputs (if using)
+storybook-static
+
+# Package manager lock files (uncomment the ones you're NOT using)
+# yarn.lock
+# pnpm-lock.yaml
+
+# API keys and sensitive configuration
+config/local.json
+secrets.json
+
+# Log files
+*.log.*
+logs/
+
+# Temporary folders
+.tmp/
+.temp/
+
+# Build artifacts
+build/
+public/build/
