@@ -244,12 +244,13 @@ export default function AIAssistantPage() {
             </div>
             <Link
               href="/dashboard"
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors flex items-center"
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors flex items-center text-sm"
             >
-              <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              Về Dashboard
+              <span className="hidden sm:inline">Về Dashboard</span>
+              <span className="sm:hidden">Về</span>
             </Link>
           </div>
         </div>
@@ -339,15 +340,15 @@ export default function AIAssistantPage() {
           </div>
 
           {/* Chat Input */}
-          <div className="p-6 border-t border-gray-200 bg-white">
-            <div className="flex space-x-4">
+          <div className="p-4 sm:p-6 border-t border-gray-200 bg-white">
+            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
               <div className="flex-1">
                 <textarea
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Nhập tin nhắn... (VD: 'Ăn tối 50k', 'Tạo danh mục du lịch')"
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-sm"
                   rows={2}
                   disabled={isLoading || isCreating}
                 />
@@ -358,14 +359,22 @@ export default function AIAssistantPage() {
               <button
                 onClick={handleSendMessage}
                 disabled={isLoading || isCreating || !inputMessage.trim()}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-400 text-white px-6 py-3 rounded-lg font-medium transition-all flex items-center justify-center min-w-[100px]"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-400 text-white px-4 py-3 sm:px-6 sm:py-3 rounded-lg font-medium transition-all flex items-center justify-center min-w-[80px] sm:min-w-[100px] text-sm"
               >
                 {isLoading || isCreating ? (
-                  <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
+                  <div className="animate-spin w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full"></div>
                 ) : (
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
+                  <>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                    <span className="hidden sm:flex items-center">
+                      <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                      Gửi
+                    </span>
+                  </>
                 )}
               </button>
             </div>
@@ -373,7 +382,7 @@ export default function AIAssistantPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {[
             { text: 'Ăn tối 50k', icon: '🍽️', color: 'from-green-500 to-emerald-600' },
             { text: 'Thu lương 15 triệu', icon: '💰', color: 'from-blue-500 to-cyan-600' },
@@ -383,10 +392,10 @@ export default function AIAssistantPage() {
             <button
               key={index}
               onClick={() => setInputMessage(action.text)}
-              className={`bg-gradient-to-r ${action.color} text-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all text-left`}
+              className={`bg-gradient-to-r ${action.color} text-white p-3 sm:p-4 rounded-lg shadow-sm hover:shadow-md transition-all text-left`}
             >
-              <div className="text-2xl mb-2">{action.icon}</div>
-              <div className="text-sm font-medium">{action.text}</div>
+              <div className="text-lg sm:text-2xl mb-1 sm:mb-2">{action.icon}</div>
+              <div className="text-xs sm:text-sm font-medium leading-tight">{action.text}</div>
             </button>
           ))}
         </div>

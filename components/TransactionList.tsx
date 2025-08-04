@@ -218,7 +218,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
       {/* Transactions Table */}
       <div className="bg-white rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900">
             Transactions ({transactions.length})
           </h3>
@@ -229,102 +229,164 @@ const TransactionList: React.FC<TransactionListProps> = ({
             No transactions found
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                    onClick={() => handleSortChange('date')}
-                  >
-                    Date
-                    {sortOptions.field === 'date' && (
-                      <span className="ml-1">
-                        {sortOptions.direction === 'asc' ? '↑' : '↓'}
-                      </span>
-                    )}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Description
-                  </th>
-                  <th
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                    onClick={() => handleSortChange('amount')}
-                  >
-                    Amount
-                    {sortOptions.field === 'amount' && (
-                      <span className="ml-1">
-                        {sortOptions.direction === 'asc' ? '↑' : '↓'}
-                      </span>
-                    )}
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Type
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Category
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Wallet
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+          <>
+            {/* Mobile View - Cards */}
+            <div className="block sm:hidden">
+              <div className="divide-y divide-gray-200">
                 {transactions.map(transaction => (
-                  <tr key={transaction.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {formatDate(new Date(transaction.date))}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {transaction.description}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <span
-                        className={
-                          transaction.type === 'income'
-                            ? 'text-green-600'
-                            : 'text-red-600'
-                        }
-                      >
-                        {transaction.type === 'income' ? '+' : '-'}
-                        {formatVND(transaction.amount)}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getTransactionTypeColor(transaction.type)}`}
-                      >
-                        {transaction.type}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {getCategoryName(transaction.categoryId)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {getWalletName(transaction.walletId)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <div key={transaction.id} className="p-4 hover:bg-gray-50">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${getTransactionTypeColor(transaction.type)}`}>
+                          <span className="text-xs font-semibold">
+                            {transaction.type === 'income' ? '+' : '-'}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900 text-sm">{transaction.description}</p>
+                          <p className="text-xs text-gray-500">
+                            {formatDate(new Date(transaction.date))}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className={`font-semibold text-sm ${
+                          transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
+                        }`}>
+                          {transaction.type === 'income' ? '+' : '-'}
+                          {formatVND(transaction.amount)}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+                      <div className="flex items-center space-x-2">
+                        <span className="bg-gray-100 px-2 py-1 rounded">
+                          {getCategoryName(transaction.categoryId)}
+                        </span>
+                        <span className="bg-gray-100 px-2 py-1 rounded">
+                          {getWalletName(transaction.walletId)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end space-x-2">
                       <button
-                        className="text-blue-600 hover:text-blue-900 mr-3"
-                        onClick={() => onEditTransaction?.(transaction)}
+                        onClick={() => onEditTransaction && onEditTransaction(transaction)}
+                        className="text-blue-600 hover:text-blue-800 text-xs font-medium"
                       >
                         Edit
                       </button>
                       <button
-                        className="text-red-600 hover:text-red-900"
                         onClick={() => handleDeleteTransaction(transaction.id)}
+                        className="text-red-600 hover:text-red-800 text-xs font-medium"
                       >
                         Delete
                       </button>
-                    </td>
-                  </tr>
+                    </div>
+                  </div>
                 ))}
-              </tbody>
-            </table>
-          </div>
+              </div>
+            </div>
+
+            {/* Desktop View - Table */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                      onClick={() => handleSortChange('date')}
+                    >
+                      Date
+                      {sortOptions.field === 'date' && (
+                        <span className="ml-1">
+                          {sortOptions.direction === 'asc' ? '↑' : '↓'}
+                        </span>
+                      )}
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                      onClick={() => handleSortChange('amount')}
+                    >
+                      Amount
+                      {sortOptions.field === 'amount' && (
+                        <span className="ml-1">
+                          {sortOptions.direction === 'asc' ? '↑' : '↓'}
+                        </span>
+                      )}
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Type
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Category
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Wallet
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {transactions.map(transaction => (
+                    <tr key={transaction.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {formatDate(new Date(transaction.date))}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {transaction.description}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <span
+                          className={
+                            transaction.type === 'income'
+                              ? 'text-green-600'
+                              : 'text-red-600'
+                          }
+                        >
+                          {transaction.type === 'income' ? '+' : '-'}
+                          {formatVND(transaction.amount)}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getTransactionTypeColor(transaction.type)}`}
+                        >
+                          {transaction.type}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {getCategoryName(transaction.categoryId)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {getWalletName(transaction.walletId)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                        <button
+                          onClick={() => onEditTransaction && onEditTransaction(transaction)}
+                          className="text-blue-600 hover:text-blue-900"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteTransaction(transaction.id)}
+                          className="text-red-600 hover:text-red-900"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </div>

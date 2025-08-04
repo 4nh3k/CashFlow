@@ -282,10 +282,10 @@ export default function DashboardPage() {
                   {recentTransactions.map((transaction: Transaction) => (
                     <div
                       key={transaction.id}
-                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                      className="flex flex-col sm:flex-row sm:items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                     >
-                      <div className="flex items-center">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-4 ${
+                      <div className="flex items-center flex-1 mb-2 sm:mb-0">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-3 flex-shrink-0 ${
                           transaction.type === 'income'
                             ? 'bg-green-100 text-green-600'
                             : 'bg-red-100 text-red-600'
@@ -300,36 +300,37 @@ export default function DashboardPage() {
                             </svg>
                           )}
                         </div>
-                        <div>
-                          <p className="font-medium text-gray-900">{transaction.description}</p>
-                          <div className="flex items-center space-x-3 text-sm text-gray-500">
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium text-gray-900 truncate">{transaction.description}</p>
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm text-gray-500">
                             <span className="flex items-center">
-                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <svg className="w-3 h-3 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z" clipRule="evenodd" />
                               </svg>
-                              {getCategoryName(transaction.categoryId)}
+                              <span className="truncate">{getCategoryName(transaction.categoryId)}</span>
                             </span>
+                            <span className="hidden sm:inline text-gray-400">•</span>
                             <span className="flex items-center">
-                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <svg className="w-3 h-3 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                               </svg>
-                              {getWalletName(transaction.walletId)}
+                              <span className="truncate">{getWalletName(transaction.walletId)}</span>
                             </span>
-                            <span className="text-gray-400">•</span>
-                            <span>
+                            <span className="hidden sm:inline text-gray-400">•</span>
+                            <span className="text-xs">
                               {new Date(transaction.date).toLocaleDateString('en-US', {
                                 month: 'short',
                                 day: 'numeric',
-                                year: 'numeric',
+                                year: window.innerWidth > 640 ? 'numeric' : '2-digit',
                               })}
                             </span>
                           </div>
                         </div>
                       </div>
-                      <div className={`text-right ${
+                      <div className={`text-right sm:text-right ${
                         transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
                       }`}>
-                        <p className="font-semibold">
+                        <p className="font-semibold text-sm sm:text-base">
                           {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
                         </p>
                       </div>

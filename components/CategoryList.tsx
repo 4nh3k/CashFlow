@@ -83,35 +83,6 @@ const CategoryList: React.FC<CategoryListProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4">
-        <div>
-          <h2 className="text-lg font-semibold text-gray-900">Categories</h2>
-          <p className="text-sm text-gray-600 mt-1">
-            Manage your transaction categories
-          </p>
-        </div>
-        <button
-          onClick={onAddCategory}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
-        >
-          <svg
-            className="h-5 w-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-          Add Category
-        </button>
-      </div>
-
       {/* Categories List */}
       {categories.length === 0 ? (
         <div className="text-center py-12">
@@ -134,12 +105,6 @@ const CategoryList: React.FC<CategoryListProps> = ({
           <p className="text-gray-600 mb-6">
             Start adding categories to organize your transactions.
           </p>
-          <button
-            onClick={onAddCategory}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
-          >
-            Add Your First Category
-          </button>
         </div>
       ) : (
         <div className="overflow-hidden">
