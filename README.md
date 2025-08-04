@@ -10,26 +10,7 @@ A comprehensive personal finance management application built with Next.js, Type
 - **AI Integration**: Automated transaction categorization using Google Gemini AI
 - **Real-time Analytics**: Interactive dashboards and financial insights
 - **Data Security**: Server-side processing with secure MongoDB integration
-
-## 🏗️ Architecture
-
-### Sprint 6: Next.js Migration (Current)
-
-The application has been migrated from a client-side React app to a full-stack Next.js application with server-side database operations:
-
-- **Frontend**: Next.js 14 with App Router, TypeScript, Tailwind CSS
-- **Backend**: Next.js API routes with MongoDB native driver
-- **Database**: MongoDB Atlas with comprehensive schema and indexing
-- **AI Integration**: Google Gemini API for transaction categorization
-- **Deployment**: Vercel with automated CI/CD pipeline
-
-### Key Components
-
-- **Database Layer**: Native MongoDB driver with connection pooling
-- **Migration System**: Comprehensive data migration and backup tools
-- **Health Monitoring**: API endpoints for system health and diagnostics
-- **Deployment Pipeline**: Staged rollout with automated rollback capabilities
-
+- 
 ## 🛠️ Technology Stack
 
 - **Framework**: Next.js 14 (App Router)
