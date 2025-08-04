@@ -37,7 +37,7 @@ export default function DashboardPage() {
     // Set initial time and mark as client-side
     setIsClient(true)
     setCurrentTime(new Date())
-    
+
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
     return () => clearInterval(timer)
   }, [])

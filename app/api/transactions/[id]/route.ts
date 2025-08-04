@@ -120,8 +120,8 @@ export async function PUT(
 
     if (isWalletChanged || isAmountChanged || isTypeChanged) {
       // First, reverse the effect of the old transaction
-      const oldAmount = existingTransaction.type === 'income' 
-        ? -existingTransaction.amount 
+      const oldAmount = existingTransaction.type === 'income'
+        ? -existingTransaction.amount
         : existingTransaction.amount
 
       await db
@@ -205,8 +205,8 @@ export async function DELETE(
     }
 
     // Reverse the wallet balance effect
-    const balanceChange = existingTransaction.type === 'income' 
-      ? -existingTransaction.amount 
+    const balanceChange = existingTransaction.type === 'income'
+      ? -existingTransaction.amount
       : existingTransaction.amount
 
     await db

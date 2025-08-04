@@ -449,7 +449,7 @@ class GeminiApiService {
     if (text.includes('ngân sách') || text.includes('budget')) {
       const amountMatch = text.match(/(\d+(?:[.,]\d+)?)\s*(k|nghìn|triệu|tr|trieu)?/)
       const periodMatch = text.match(/(tuần|tháng|ngày|weekly|monthly|week|month)/)
-      
+
       if (!amountMatch) {
         return {
           message: 'Để tạo ngân sách, bạn cần cho mình biết số tiền. Ví dụ: "Tạo ngân sách ăn uống 500k/tháng"',
@@ -497,7 +497,7 @@ class GeminiApiService {
       }
 
       // Check if category exists
-      const category = financialContext.categories.find((cat: any) => 
+      const category = financialContext.categories.find((cat: any) =>
         cat.name.toLowerCase().includes(categoryName.toLowerCase()) ||
         categoryName.toLowerCase().includes(cat.name.toLowerCase())
       )

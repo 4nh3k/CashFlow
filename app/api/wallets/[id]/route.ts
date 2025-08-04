@@ -168,8 +168,8 @@ export async function DELETE(
 
     if (transactionCount > 0) {
       return NextResponse.json(
-        { 
-          error: 'Cannot delete wallet with existing transactions. Please move or delete transactions first.' 
+        {
+          error: 'Cannot delete wallet with existing transactions. Please move or delete transactions first.'
         },
         { status: 400 }
       )
