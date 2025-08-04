@@ -151,14 +151,6 @@ PersonalFinanceApp/
 └── public/                # Static assets
 ```
 
-## 🔐 Security
-
-- **Environment Variables**: All sensitive data stored securely
-- **Server-side Operations**: Database operations on server-side only
-- **Authentication**: NextAuth.js integration ready
-- **Data Validation**: Comprehensive input validation with Zod
-- **CORS Configuration**: Proper cross-origin request handling
-
 ## 🚀 Production Deployment
 
 The application is designed for deployment on Vercel with MongoDB Atlas:
