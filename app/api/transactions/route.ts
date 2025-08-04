@@ -31,9 +31,11 @@ export async function GET() {
       transactions = await (db as any).getCollection('transactions')
     }
 
-    // Serialize dates to ISO strings
+    // Serialize dates to ISO strings and convert _id to id
     const serializedTransactions = transactions.map((transaction: any) => ({
       ...transaction,
+      _id: transaction._id?.toString(),
+      id: transaction._id?.toString(),
       createdAt: transaction.createdAt
         ? transaction.createdAt.toISOString()
         : new Date().toISOString(),

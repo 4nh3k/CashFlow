@@ -10,7 +10,7 @@
       "memory": 1024
     }
   },
-  "regions": ["sin1", "hnd1", "sfo1"],
+  "regions": ["sin1"],
   "env": {
     "NODE_ENV": "production"
   },

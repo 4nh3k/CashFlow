@@ -28,9 +28,11 @@ export async function GET() {
       budgets = await (db as any).getCollection('budgets')
     }
 
-    // Serialize dates to ISO strings
+    // Serialize dates to ISO strings and convert _id to id
     const serializedBudgets = budgets.map((budget: any) => ({
       ...budget,
+      _id: budget._id?.toString(),
+      id: budget._id?.toString(),
       createdAt: budget.createdAt
         ? budget.createdAt.toISOString()
         : new Date().toISOString(),
