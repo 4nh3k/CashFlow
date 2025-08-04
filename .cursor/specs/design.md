@@ -1,13 +1,19 @@
 # Personal Finance Mana### Deployment
-- **Web**: Deployed as a single-page application (SPA) using Vite for build tooling and hosted on a static server (e.g., Vercel, Netlify).
-- **Serverless Backend**: MongoDB Atlas App Services handles all backend operations including authentication, data access rules, triggers, and serverless functions.
-- **Real-time Sync**: Automatic data synchronization across devices and users using MongoDB Realm's built-in sync capabilities.
+
+- **Current**: Deployed as a single-page application (SPA) using Vite for build tooling and hosted on a static server (e.g., Vercel, Netlify).
+- **Migration Options (R43)**:
+  - **Next.js**: Full-stack deployment on Vercel with API routes and native MongoDB driver
+  - **React + Express.js**: Frontend on Netlify/Vercel, backend on Railway/Render/AWS Lambda
+  - **React + Supabase**: Frontend on static hosting, backend via Supabase APIs
+- **Database Migration**: Export existing MongoDB Realm data and import to new platform with proper data validation and integrity checks
 - **Responsive Design**: Tailwind CSS ensures the UI adapts to various screen sizes (mobile, tablet, desktop) with fluid layouts and media queries.nt System Design Plan
 
 ## System Architecture
-The system follows a **layered architecture** implemented in React to ensure modularity, maintainability, and cross-platform compatibility (web, mobile web) with a responsive design optimized for mobile devices using Tailwind CSS. **MongoDB Atlas App Services (Realm)** provides serverless data storage, real-time synchronization, authentication, and backend functions, eliminating the need for a custom backend server.
+
+The system follows a **layered architecture** implemented in React to ensure modularity, maintainability, and cross-platform compatibility (web, mobile web) with a responsive design optimized for mobile devices using Tailwind CSS. **Platform Migration (R43)**: Due to MongoDB Realm Web SDK deprecation, the system requires migration to a modern serverless architecture using either Next.js with native MongoDB driver, Express.js backend, or alternative database solutions like Supabase/PlanetScale for long-term sustainability and better performance.
 
 ### Layers
+
 1. **Presentation Layer**:
    - **Tech**: React with Tailwind CSS for responsive UI rendering across devices (desktop, tablet, mobile).
    - **Components**: Navigation (React Router), Forms (React Hook Form), Charts (`recharts` for spending insights).
@@ -18,19 +24,63 @@ The system follows a **layered architecture** implemented in React to ensure mod
    - **Purpose**: Processes user inputs, manages transactions, budgets, categories, wallets, and notifications. Integrates with the Gemini API for chat parsing and MongoDB Realm for data operations.
 
 3. **Data Access Layer**:
-   - **Tech**: MongoDB Realm Web SDK (`realm-web`) for serverless Atlas App Services connectivity.
-   - **Purpose**: Manages data persistence, retrieval, real-time synchronization, authentication, and schema validation using BSON/JSON documents stored in MongoDB Atlas with automatic sync.
+   - **Current Tech**: MongoDB Realm Web SDK (`realm-web`) for serverless Atlas App Services connectivity.
+   - **Migration Target (R43)**: Next.js API routes with native MongoDB driver, or Express.js with MongoDB/PostgreSQL/MySQL, or modern serverless databases (Supabase, PlanetScale, Neon).
+   - **Purpose**: Manages data persistence, retrieval, synchronization, authentication, and schema validation with proper error handling and data integrity.
 
 4. **External Services Layer**:
    - **Tech**: Axios for HTTP requests to the Gemini API.
    - **Purpose**: Handles LLM API communication for chat-based transaction parsing, with a configurable client for future API switching.
 
 ### Deployment
+
 - **Web**: Deployed as a single-page application (SPA) using Vite for build tooling and hosted on a static server (e.g., Vercel, Netlify).
 - **Local Storage**: Data stored locally in MongoDB Realm’s offline storage using BSON/JSON format, with sync to MongoDB Atlas for cloud integration.
 - **Responsive Design**: Tailwind CSS ensures the UI adapts to various screen sizes (mobile, tablet, desktop) with fluid layouts and media queries.
 
+## Migration Strategy (R43)
+
+### Migration Options Analysis
+
+1. **Next.js 14 with MongoDB Native Driver (Recommended)**:
+   - **Pros**: Full-stack TypeScript, API routes, excellent Vercel deployment, server-side rendering, built-in optimization
+   - **Cons**: Learning curve for server-side concepts, migration effort for existing React components
+   - **Best For**: Long-term scalability, SEO benefits, unified codebase
+
+2. **React + Express.js Backend**:
+   - **Pros**: Keep existing React frontend, familiar REST API pattern, flexible deployment options
+   - **Cons**: Two separate codebases, more complex deployment, CORS configuration
+   - **Best For**: Minimal frontend changes, team familiar with Express.js
+
+3. **React + Supabase/PlanetScale**:
+   - **Pros**: Modern serverless database, built-in authentication, real-time subscriptions, excellent TypeScript support
+   - **Cons**: Vendor lock-in, learning new API patterns, data migration complexity
+   - **Best For**: Rapid development, modern features, PostgreSQL benefits
+
+### Data Migration Plan
+
+1. **Export Phase**:
+   - Extract all transactions, categories, wallets, budgets, keyword mappings from MongoDB Realm
+   - Validate data integrity and create backup files (JSON/CSV)
+   - Document data relationships and constraints
+
+2. **Schema Migration**:
+   - Design new database schema optimized for chosen platform
+   - Map existing MongoDB ObjectIds to new primary key format
+   - Set up proper indexes and constraints for performance
+
+3. **Import Phase**:
+   - Import data to new database with proper validation
+   - Test data integrity and relationships
+   - Verify all features work with migrated data
+
+4. **Rollback Plan**:
+   - Maintain MongoDB Realm backup for emergency rollback
+   - Staged deployment with feature flags
+   - Comprehensive testing before full migration
+
 ## Key Components
+
 1. **Transaction Manager**:
    - Handles CRUD operations for income/expense transactions.
    - Features: Add, edit, delete, list transactions with sorting/filtering.
@@ -67,9 +117,11 @@ The system follows a **layered architecture** implemented in React to ensure mod
    - Dependencies: Web Notifications API, `react-toastify`.
 
 ## Data Models
+
 Data is stored locally in MongoDB Realm using BSON/JSON format, designed for seamless sync with MongoDB Atlas.
 
 ### Transaction
+
 ```json
 {
   "_id": "string", // MongoDB ObjectId
@@ -83,6 +135,7 @@ Data is stored locally in MongoDB Realm using BSON/JSON format, designed for sea
 ```
 
 ### Category
+
 ```json
 {
   "_id": "string", // MongoDB ObjectId
@@ -92,6 +145,7 @@ Data is stored locally in MongoDB Realm using BSON/JSON format, designed for sea
 ```
 
 ### Wallet
+
 ```json
 {
   "_id": "string", // MongoDB ObjectId
@@ -101,6 +155,7 @@ Data is stored locally in MongoDB Realm using BSON/JSON format, designed for sea
 ```
 
 ### Budget
+
 ```json
 {
   "_id": "string", // MongoDB ObjectId
@@ -113,6 +168,7 @@ Data is stored locally in MongoDB Realm using BSON/JSON format, designed for sea
 ```
 
 ### Lending/Borrowing
+
 ```json
 {
   "_id": "string", // MongoDB ObjectId
@@ -127,6 +183,7 @@ Data is stored locally in MongoDB Realm using BSON/JSON format, designed for sea
 ```
 
 ### Notification
+
 ```json
 {
   "_id": "string", // MongoDB ObjectId
@@ -138,6 +195,7 @@ Data is stored locally in MongoDB Realm using BSON/JSON format, designed for sea
 ```
 
 ### Keyword Mapping
+
 ```json
 {
   "_id": "string", // MongoDB ObjectId
@@ -147,27 +205,35 @@ Data is stored locally in MongoDB Realm using BSON/JSON format, designed for sea
 ```
 
 ## Testing Strategy
+
 ### Unit Tests
+
 - **Tool**: Jest with `@testing-library/react`.
 - **Scope**: Test individual functions in the Business Logic Layer (e.g., transaction parsing, budget calculations, category reassignment).
 - **Example**: Verify that "bida 50k" parses to 50,000 VND and maps to the "Entertainment" category.
 
 ### Component Tests
+
 - **Tool**: React Testing Library.
 - **Scope**: Test UI components (e.g., transaction form, chart rendering, notification display) for correct rendering and user interactions across screen sizes.
 - **Example**: Ensure the budget alert notification displays correctly on mobile (below 640px) and desktop.
 
 ## Implementation Notes
+
 - **React Setup**: Use Vite for fast development and production builds. Include `react-router-dom` for navigation and `react-hook-form` for form handling.
-- **MongoDB Setup**: Use MongoDB Realm for local storage with offline sync, integrated via the Realm JavaScript SDK. Configure MongoDB Atlas for future cloud sync.
+- **Database Migration (R43)**:
+  - **Next.js Option**: Migrate to Next.js 14 with App Router and native MongoDB driver via `mongodb` package
+  - **Express.js Option**: Create RESTful API with Express.js and MongoDB native driver
+  - **Supabase Option**: Use Supabase client SDK with PostgreSQL database and built-in authentication
 - **Responsive Design**: Leverage Tailwind CSS for responsive layouts (e.g., `sm:`, `md:`, `lg:` breakpoints) and mobile-first design. Use CSS Grid and Flexbox for adaptive layouts.
 - **LLM API**: Implement a wrapper around Axios for Gemini API calls, with a configuration file for endpoint and key to support future API changes.
-- **Storage**: Use MongoDB Realm for local storage with BSON/JSON schemas validated using `zod`.
+- **Storage Migration**: Implement data export/import utilities for seamless migration from MongoDB Realm to new platform with data validation using `zod`.
 - **Notifications**: Use Web Notifications API for browser notifications and `react-toastify` for in-app alerts, with responsive styling for mobile devices.
 - **Charts**: Use `recharts` for lightweight, responsive chart rendering, optimized for mobile and desktop.
-- **Future DB Integration**: Design storage layer with an abstraction (e.g., Repository pattern) to sync seamlessly with MongoDB Atlas.
+- **Future-Proof Architecture**: Design with platform abstraction (Repository pattern) to support future database or platform changes.
 
 ## Example Responsive Component
+
 Below is an example of a responsive transaction list component using React, Tailwind CSS, and MongoDB Realm:
 
 <xaiArtifact artifact_id="ca6e278a-e280-4636-bc5a-05b675b28fc4" artifact_version_id="f7c8ce15-9b9a-4275-856c-5487f0cec59b" title="TransactionList.jsx" contentType="text/jsx">
@@ -177,47 +243,48 @@ import { format } from 'date-fns';
 import { Realm } from '@realm/react';
 
 const TransactionList = () => {
-  const [transactions, setTransactions] = useState([]);
-  const realm = useSelector((state) => state.database.realm); // Assume Realm instance in Redux
+const [transactions, setTransactions] = useState([]);
+const realm = useSelector((state) => state.database.realm); // Assume Realm instance in Redux
 
-  useEffect(() => {
-    if (realm) {
-      const transactionCollection = realm.objects('Transaction');
-      setTransactions([...transactionCollection]);
-      transactionCollection.addListener(() => {
-        setTransactions([...transactionCollection]);
-      });
-      return () => transactionCollection.removeAllListeners();
-    }
-  }, [realm]);
+useEffect(() => {
+if (realm) {
+const transactionCollection = realm.objects('Transaction');
+setTransactions([...transactionCollection]);
+transactionCollection.addListener(() => {
+setTransactions([...transactionCollection]);
+});
+return () => transactionCollection.removeAllListeners();
+}
+}, [realm]);
 
-  return (
-    <div className="container mx-auto p-4 sm:p-6 lg:p-8">
-      <h2 className="text-xl sm:text-2xl font-bold mb-4">Transactions</h2>
-      <div className="overflow-x-auto">
-        <table className="w-full table-auto">
-          <thead>
-            <tr className="bg-gray-100 text-left">
-              <th className="p-2 sm:p-3">Date</th>
-              <th className="p-2 sm:p-3">Description</th>
-              <th className="p-2 sm:p-3">Amount</th>
-              <th className="p-2 sm:p-3">Category</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((transaction) => (
-              <tr key={transaction._id.toString()} className="border-b">
-                <td className="p-2 sm:p-3">{format(new Date(transaction.date), 'MM/dd/yyyy')}</td>
-                <td className="p-2 sm:p-3">{transaction.description || '-'}</td>
-                <td className="p-2 sm:p-3">{transaction.amount.toLocaleString('vi-VN')} VND</td>
-                <td className="p-2 sm:p-3">{transaction.categoryId}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+return (
+
+<div className="container mx-auto p-4 sm:p-6 lg:p-8">
+<h2 className="text-xl sm:text-2xl font-bold mb-4">Transactions</h2>
+<div className="overflow-x-auto">
+<table className="w-full table-auto">
+<thead>
+<tr className="bg-gray-100 text-left">
+<th className="p-2 sm:p-3">Date</th>
+<th className="p-2 sm:p-3">Description</th>
+<th className="p-2 sm:p-3">Amount</th>
+<th className="p-2 sm:p-3">Category</th>
+</tr>
+</thead>
+<tbody>
+{transactions.map((transaction) => (
+<tr key={transaction._id.toString()} className="border-b">
+<td className="p-2 sm:p-3">{format(new Date(transaction.date), 'MM/dd/yyyy')}</td>
+<td className="p-2 sm:p-3">{transaction.description || '-'}</td>
+<td className="p-2 sm:p-3">{transaction.amount.toLocaleString('vi-VN')} VND</td>
+<td className="p-2 sm:p-3">{transaction.categoryId}</td>
+</tr>
+))}
+</tbody>
+</table>
+</div>
+</div>
+);
 };
 
 export default TransactionList;

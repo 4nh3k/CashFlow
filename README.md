@@ -1,69 +1,203 @@
-# React + TypeScript + Vite
+# Personal Finance App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive personal finance management application built with Next.js, TypeScript, and MongoDB, featuring AI-powered transaction categorization and advanced budget management.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Transaction Management**: Add, edit, and categorize financial transactions
+- **Budget Planning**: Create and track budgets with intelligent alerts
+- **Wallet Management**: Manage multiple accounts and payment methods
+- **AI Integration**: Automated transaction categorization using Google Gemini AI
+- **Real-time Analytics**: Interactive dashboards and financial insights
+- **Data Security**: Server-side processing with secure MongoDB integration
 
-## Expanding the ESLint configuration
+## 🏗️ Architecture
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Sprint 6: Next.js Migration (Current)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The application has been migrated from a client-side React app to a full-stack Next.js application with server-side database operations:
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **Frontend**: Next.js 14 with App Router, TypeScript, Tailwind CSS
+- **Backend**: Next.js API routes with MongoDB native driver
+- **Database**: MongoDB Atlas with comprehensive schema and indexing
+- **AI Integration**: Google Gemini API for transaction categorization
+- **Deployment**: Vercel with automated CI/CD pipeline
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Key Components
+
+- **Database Layer**: Native MongoDB driver with connection pooling
+- **Migration System**: Comprehensive data migration and backup tools
+- **Health Monitoring**: API endpoints for system health and diagnostics
+- **Deployment Pipeline**: Staged rollout with automated rollback capabilities
+
+## 🛠️ Technology Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: MongoDB Atlas (Native Driver)
+- **AI/ML**: Google Gemini API
+- **State Management**: Redux Toolkit
+- **Deployment**: Vercel
+- **Development**: Vite, ESLint, Prettier
+
+## 📋 Prerequisites
+
+- Node.js 18+ and npm
+- MongoDB Atlas account or local MongoDB installation
+- Google Gemini API key
+- Vercel account (for deployment)
+
+## 🚀 Quick Start
+
+### 1. Clone and Install
+
+```bash
+git clone <repository-url>
+cd PersonalFinanceApp
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Environment Setup
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Copy environment template
+cp .env.example .env.local
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Edit .env.local with your configuration
+# Required variables:
+# - MONGODB_URI
+# - GEMINI_API_KEY
+# - NEXTAUTH_SECRET
+# - NEXTAUTH_URL
 ```
+
+### 3. Database Setup
+
+```bash
+# For development with existing data migration
+npm run db:migrate
+
+# For fresh installation
+npm run db:backup
+```
+
+### 4. Development
+
+```bash
+# Start development server
+npm run dev
+
+# Run type checking
+npm run type-check
+
+# Run linting
+npm run lint
+```
+
+### 5. Deployment
+
+```bash
+# Deploy to staging
+npm run deploy
+
+# Deploy to production
+npm run deploy:production
+
+# Check deployment status
+npm run deploy:status
+```
+
+## 📚 Documentation
+
+- **[Deployment Guide](docs/deployment-guide.md)**: Complete deployment instructions
+- **[Database Migration](docs/database-migration.md)**: Data migration procedures
+- **[Sprint 6 Architecture](docs/sprint6-architecture.md)**: Technical architecture overview
+
+## 🔧 Development Commands
+
+### Database Operations
+
+```bash
+npm run db:migrate          # Run database migration
+npm run db:backup           # Create database backup
+npm run db:restore          # Restore from backup
+npm run db:list-backups     # List available backups
+npm run db:cleanup          # Clean old backups
+```
+
+### Deployment Operations
+
+```bash
+npm run deploy              # Deploy to staging
+npm run deploy:production   # Deploy to production
+npm run deploy:status       # Check deployment status
+npm run deploy:rollback     # Rollback deployment
+```
+
+### Development Tools
+
+```bash
+npm run dev                 # Start development server
+npm run build               # Build for production
+npm run start               # Start production server
+npm run lint                # Run ESLint
+npm run type-check          # TypeScript type checking
+```
+
+## 🏗️ Project Structure
+
+```
+PersonalFinanceApp/
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Home page
+├── lib/                   # Shared utilities
+│   ├── database/          # Database operations
+│   ├── config/            # Configuration
+│   └── mongodb.ts         # MongoDB client
+├── src/                   # Legacy React components (being migrated)
+│   ├── components/        # React components
+│   ├── store/             # Redux store
+│   ├── types/             # TypeScript types
+│   └── utils/             # Utility functions
+├── scripts/               # Build and deployment scripts
+│   ├── deploy.ts          # Deployment orchestration
+│   └── db-migration.ts    # Database migration tools
+├── docs/                  # Documentation
+└── public/                # Static assets
+```
+
+## 🔐 Security
+
+- **Environment Variables**: All sensitive data stored securely
+- **Server-side Operations**: Database operations on server-side only
+- **Authentication**: NextAuth.js integration ready
+- **Data Validation**: Comprehensive input validation with Zod
+- **CORS Configuration**: Proper cross-origin request handling
+
+## 🚀 Production Deployment
+
+The application is designed for deployment on Vercel with MongoDB Atlas:
+
+1. **Database**: MongoDB Atlas production cluster
+2. **Application**: Vercel serverless functions
+3. **CDN**: Vercel Edge Network for static assets
+4. **Monitoring**: Health check endpoints and error tracking
+5. **Rollback**: Automated rollback on deployment failure
+
+For detailed deployment instructions, see the [Deployment Guide](docs/deployment-guide.md).
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

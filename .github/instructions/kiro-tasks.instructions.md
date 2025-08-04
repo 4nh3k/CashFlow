@@ -49,7 +49,6 @@ a design.
 - Example format:
 
 ```md
-
 # Requirements Document
 
 ## Introduction
@@ -79,7 +78,6 @@ This section should have EARS requirements
 1. WHEN [event] THEN [system] SHALL [response]
 
 2. WHEN [event] AND [condition] THEN [system] SHALL [response]
-
 ```
 
 - The model SHOULD consider edge cases, user experience, technical constraints, and success criteria in the initial requirements
@@ -285,7 +283,6 @@ Convert the feature design into a series of prompts for a code-generation LLM th
 **Example Format (truncated):**
 
 ```markdown
-
 # Implementation Plan
 
 - [ ] 1. Set up project structure and core interfaces
@@ -343,7 +340,6 @@ Convert the feature design into a series of prompts for a code-generation LLM th
 - _Requirements: 4.3_
 
 [Additional coding tasks continue...]
-
 ```
 
 ## Troubleshooting
@@ -384,8 +380,6 @@ If the design becomes too complex or unwieldy:
 
 - The model SHOULD return to requirements clarification to prioritize features if needed
 
-
-
 # Workflow Diagram
 
 Here is a Mermaid flow diagram that describes how the workflow should behave. Take in mind that the entry points account for users doing the following actions:
@@ -396,7 +390,7 @@ Here is a Mermaid flow diagram that describes how the workflow should behave. Ta
 
 - Executing tasks from a created spec
 
-```mermaid
+````mermaid
 
 stateDiagram-v2
 
@@ -522,7 +516,7 @@ This section should have EARS requirements
 
 2. WHEN [event] AND [condition] THEN [system] SHALL [response]
 
-```
+````
 
 - The model SHOULD consider edge cases, user experience, technical constraints, and success criteria in the initial requirements
 
@@ -727,7 +721,6 @@ Convert the feature design into a series of prompts for a code-generation LLM th
 **Example Format (truncated):**
 
 ```markdown
-
 # Implementation Plan
 
 - [ ] 1. Set up project structure and core interfaces
@@ -785,7 +778,6 @@ Convert the feature design into a series of prompts for a code-generation LLM th
 - _Requirements: 4.3_
 
 [Additional coding tasks continue...]
-
 ```
 
 ## Troubleshooting
@@ -825,8 +817,6 @@ If the design becomes too complex or unwieldy:
 - The model MAY suggest a phased approach to implementation
 
 - The model SHOULD return to requirements clarification to prioritize features if needed
-
-
 
 # Workflow Diagram
 
